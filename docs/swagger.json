@@ -1,0 +1,153 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "REST API project ready for prod",
+        "title": "REST API Service",
+        "contact": {}
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/url": {
+            "post": {
+                "description": "posts url with alias",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "URL"
+                ],
+                "summary": "Post URL",
+                "parameters": [
+                    {
+                        "description": "Request for posting url",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_delivery_handlers_url_save.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully submited url",
+                        "schema": {
+                            "$ref": "#/definitions/internal_delivery_handlers_url_save.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_delivery_handlers_url_save.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/url/{alias}": {
+            "delete": {
+                "description": "redirect to url by speciefied alias",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "URL"
+                ],
+                "summary": "Get URL",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "alias for further redirect",
+                        "name": "alias",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/{alias}": {
+            "get": {
+                "description": "redirect to url by speciefied alias",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "URL"
+                ],
+                "summary": "Get URL",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "alias for further redirect",
+                        "name": "alias",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Successfully redirected",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "internal_delivery_handlers_url_save.Request": {
+            "type": "object",
+            "required": [
+                "url"
+            ],
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_delivery_handlers_url_save.Response": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Error, Ok",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

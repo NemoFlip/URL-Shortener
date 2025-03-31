@@ -1,0 +1,100 @@
+basePath: /
+definitions:
+  internal_delivery_handlers_url_save.Request:
+    properties:
+      alias:
+        type: string
+      url:
+        type: string
+    required:
+    - url
+    type: object
+  internal_delivery_handlers_url_save.Response:
+    properties:
+      alias:
+        type: string
+      error:
+        type: string
+      status:
+        description: Error, Ok
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: REST API project ready for prod
+  title: REST API Service
+paths:
+  /{alias}:
+    get:
+      description: redirect to url by speciefied alias
+      parameters:
+      - description: alias for further redirect
+        in: path
+        name: alias
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Successfully redirected
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+      summary: Get URL
+      tags:
+      - URL
+  /url:
+    post:
+      consumes:
+      - application/json
+      description: posts url with alias
+      parameters:
+      - description: Request for posting url
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_delivery_handlers_url_save.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully submited url
+          schema:
+            $ref: '#/definitions/internal_delivery_handlers_url_save.Response'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/internal_delivery_handlers_url_save.Response'
+      summary: Post URL
+      tags:
+      - URL
+  /url/{alias}:
+    delete:
+      description: redirect to url by speciefied alias
+      parameters:
+      - description: alias for further redirect
+        in: path
+        name: alias
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully deleted
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+      summary: Get URL
+      tags:
+      - URL
+swagger: "2.0"
