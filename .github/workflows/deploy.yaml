@@ -31,11 +31,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.20.2
+          go-version: 1.24.1
       - name: Build app
         run: |
           go mod download
-          go build -o url-shortener ./cmd/url-shortener
+          go build -o url-shortener ./cmd/app
       - name: Deploy to VM
         run: |
           sudo apt-get install -y ssh rsync
