@@ -5,7 +5,7 @@
         "title": "REST API Service",
         "contact": {}
     },
-    "host": "localhost:8080",
+    "host": "5.189.237.26:8080",
     "basePath": "/",
     "paths": {
         "/url": {

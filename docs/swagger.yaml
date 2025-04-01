@@ -19,7 +19,7 @@ definitions:
         description: Error, Ok
         type: string
     type: object
-host: localhost:8080
+host: 5.189.237.26:8080
 info:
   contact: {}
   description: REST API project ready for prod

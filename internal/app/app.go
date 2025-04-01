@@ -17,7 +17,7 @@ import (
 
 // @title REST API Service
 // @description REST API project ready for prod
-// @host localhost:8080
+// @host 5.189.237.26:8080
 // @BasePath /
 func Run(cfg *config.Config, logger *slog.Logger) {
 	storage, err := postgres.NewStorage(cfg.DataSourceName)
@@ -34,8 +34,6 @@ func Run(cfg *config.Config, logger *slog.Logger) {
 	r.Use(mwLogger.New(logger))
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.URLFormat)
-
-
 
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
