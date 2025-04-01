@@ -19,6 +19,26 @@ definitions:
         description: Error, Ok
         type: string
     type: object
+  internal_delivery_handlers_url_update.Request:
+    properties:
+      alias:
+        type: string
+      new_url:
+        type: string
+    required:
+    - alias
+    - new_url
+    type: object
+  internal_delivery_handlers_url_update.Response:
+    properties:
+      alias:
+        type: string
+      error:
+        type: string
+      status:
+        description: Error, Ok
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -72,6 +92,35 @@ paths:
           schema:
             $ref: '#/definitions/internal_delivery_handlers_url_save.Response'
       summary: Post URL
+      tags:
+      - URL
+    put:
+      consumes:
+      - application/json
+      description: updates existing URL by alias
+      parameters:
+      - description: Request for updating url
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_delivery_handlers_url_update.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully updated url
+          schema:
+            $ref: '#/definitions/internal_delivery_handlers_url_update.Response'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/internal_delivery_handlers_url_update.Response'
+        "404":
+          description: URL not found
+          schema:
+            $ref: '#/definitions/internal_delivery_handlers_url_update.Response'
+      summary: Update URL
       tags:
       - URL
   /url/{alias}:
