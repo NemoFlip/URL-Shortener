@@ -27,7 +27,6 @@ func NewStorage(dataSourceName string) (*Storage, error) {
 	return &Storage{DB: db}, nil
 }
 
-// SaveURL TODO: refactor it to the separate file
 func (s *Storage) SaveURL(urlToSave, alias string) error {
 	const fn = "storage.postgres.SaveURL"
 	query := "INSERT INTO url (url, alias) VALUES ($1, $2)"
@@ -63,6 +62,24 @@ func (s *Storage) DeleteURL(alias string) error {
 	const fn = "storage.postgres.DeleteURL"
 	query := "DELETE FROM url WHERE alias = $1"
 	res, err := s.DB.Exec(query, alias)
+	if err != nil {
+		return fmt.Errorf("%s: %w", fn, err)
+	}
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("%s: failed to get rows affected: %w", fn, err)
+	}
+	if rowsAffected == 0 {
+		return storage.ErrURLNotFound
+	}
+	return nil
+}
+
+func (s *Storage) UpdateURL(alias, newURL string) error {
+	const fn = "storage.postgres.UpdateURL"
+	query := "UPDATE url SET url = $1 WHERE alias = $2"
+
+	res, err := s.DB.Exec(query, newURL, alias)
 	if err != nil {
 		return fmt.Errorf("%s: %w", fn, err)
 	}

@@ -16,6 +16,50 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/url": {
+            "put": {
+                "description": "updates existing URL by alias",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "URL"
+                ],
+                "summary": "Update URL",
+                "parameters": [
+                    {
+                        "description": "Request for updating url",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/internal_delivery_handlers_url_update.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated url",
+                        "schema": {
+                            "$ref": "#/definitions/internal_delivery_handlers_url_update.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_delivery_handlers_url_update.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "URL not found",
+                        "schema": {
+                            "$ref": "#/definitions/internal_delivery_handlers_url_update.Response"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "posts url with alias",
                 "consumes": [
@@ -142,6 +186,36 @@ const docTemplate = `{
             }
         },
         "internal_delivery_handlers_url_save.Response": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Error, Ok",
+                    "type": "string"
+                }
+            }
+        },
+        "internal_delivery_handlers_url_update.Request": {
+            "type": "object",
+            "required": [
+                "alias",
+                "new_url"
+            ],
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "new_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_delivery_handlers_url_update.Response": {
             "type": "object",
             "properties": {
                 "alias": {
